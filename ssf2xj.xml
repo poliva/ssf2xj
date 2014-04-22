@@ -1,4 +1,28 @@
 <mamecheat version="1">
+<!--
+
+http://www.mamecheat.co.uk/forums/viewtopic.php?p=13271#p13271
+
+maincpu.pb@10BEEF=0F
+
+1. maincpu: This is the tag of the CPU whose memory you want to poke, maincpu is in 99% of cases the tag you will need
+
+2. p : This is the memory space that needs to be poked, there are 7 possibilities p/d/i/3/o/r/m (they won't all work for all games)
+p = program write (most RAM cheats need this)
+m = region write (most ROM cheats use this)
+r = RAM write (use this for ROM cheats if m doesn't work or for RAM cheats if p doesn't work)
+o = Opcode Write (use this for ROM cheats if m and r don't work - often used for encrypted memory )
+d = data write (don't think I've ever used this)
+i = i/o write (don't think I've ever used this)
+3 = SPACE3 write (I've definitely never used this)
+
+3. b : memory size of what's being poked, there are four possibilities b (byte), w (word=2 bytes), d (doubleword=4 bytes) or q (quadword=8 bytes)
+
+I'm sure you can work out that 10BEEF is the address and 0x0F is what's being poked.
+
+Note, the pb part above can be preceded by p (physical/default) or l (logical) if p/d/i/3 memory spaces are being poked - it's a rare occurrence to need 'l' and it's normal just to drop p for physical so eg. maincpu.pb rather than maincpu.ppb .
+
+-->
 
  <cheat desc="Training mode (Pasky)">
   <!--  author: Pasky
