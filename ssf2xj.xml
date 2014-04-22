@@ -1136,8 +1136,9 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x20">Akuma/Gouki</item>
     </parameter>
     <script state="run">
+      <action condition="param == 0F">maincpu.pb@FF87FF=0</action>
       <action condition="param le 0F">
-        maincpu.pb@FF87DF=param, maincpu.pb@FF880B=0, maincpu.pb@FF87FF=0, maincpu.pb@FF8804=0
+        maincpu.pb@FF87DF=param, maincpu.pb@FF880B=0, maincpu.pb@FF8804=0
       </action>
       <action condition="param gt 0F and param le 1f">
         temp1=param-0x10,
@@ -1630,8 +1631,9 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x20">Akuma/Gouki</item>
     </parameter>
     <script state="run">
+      <action condition="param == 0F">maincpu.pb@FF8BFF=0</action>
       <action condition="param le 0F">
-        maincpu.pb@FF8BDF=param, maincpu.pb@FF8C0B=0, maincpu.pb@FF8BFF=0, maincpu.pb@FF8C04=0
+        maincpu.pb@FF8BDF=param, maincpu.pb@FF8C0B=0, maincpu.pb@FF8C04=0
       </action>
       <action condition="param gt 0F and param le 1f">
         temp1=param-0x10,
