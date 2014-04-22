@@ -156,19 +156,19 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
    -->
     <script state="on">
       <action>
-        maincpu.ow@49c4=0090,
-        maincpu.ow@49e8=0002,
-        maincpu.ow@4a78=0090,
-        maincpu.oq@4a96=4eb90007f2b24e75,
-        maincpu.ow@4db0=0090,
-        maincpu.ow@e2fe=0034,
-        maincpu.ow@ecc0=0034,
-        maincpu.ow@eccc=0034,
-        maincpu.ow@ecda=637c,
-        maincpu.ow@fe90=0dd0,
-        maincpu.ow@27faa=02c4,
-        maincpu.ow@be64e=0090,
-        maincpu.ow@bebae=0090
+        maincpu.ow@49c4=0090,  <!-- throw3 (life refill) -->
+        maincpu.ow@49e8=0002,  <!-- remove ko knockdown (throw3) -->
+        maincpu.ow@4a78=0090,  <!-- throw (life refill) -->
+        maincpu.oq@4a96=4eb90007f2b24e75, <!-- throw1 ko slowdown -->
+        maincpu.ow@4db0=0090,  <!-- throw (life refill) -->
+        maincpu.ow@e2fe=0034,  <!-- music (character select) -->
+        maincpu.ow@ecc0=0034,  <!-- music (character select) -->
+        maincpu.ow@eccc=0034,  <!-- music (character select) -->
+        maincpu.ow@ecda=637c,  <!-- timer (character select) -->
+        maincpu.ow@fe90=0dd0,  <!-- timer (mid match) -->
+        maincpu.ow@27faa=02c4, <!-- super doesn't drain -->
+        maincpu.ow@be64e=0090, <!-- regular hits (life refill) -->
+        maincpu.ow@bebae=0090  <!-- projectiles (life refill) -->
       </action>
     </script>
     <script state="off">
