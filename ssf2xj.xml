@@ -107,7 +107,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <action>maincpu.pw@FF84AC=0</action>
       <action>maincpu.pw@FF8DCE=9928</action>
       <action condition="(maincpu.pw@ff860a lt 73 and maincpu.pb@ff8451==14)">
-        maincpu.pw@ff8478=90, maincpu.pw@ff847a=90, maincpu.pw@ff860a=90 
+        maincpu.pw@ff8478=90, maincpu.pw@ff847a=90, maincpu.pw@ff860a=90
       </action>
       <action condition="(maincpu.pw@ff887a lt 73 and maincpu.pb@ff8851==14)">
         maincpu.pw@ff8878=90, maincpu.pw@ff887a=90, maincpu.pw@ff8a0a=90
@@ -148,7 +148,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
   </cheat>
 
   <cheat desc="Training mode (jedpossum)">
-  <!--  author: jedpossum 
+  <!--  author: jedpossum
         origin: http://forums.shoryuken.com/discussion/comment/8699161/#Comment_8699161
        comment: ported to mame cheat format by pof
    description: infinite time, super does not discharge, when health bar empty the game continues
@@ -156,42 +156,42 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
    -->
     <script state="on">
       <action>
-	maincpu.ow@49c4=0090,
-	maincpu.ow@49e8=0002,
-	maincpu.ow@4a78=0090,
-	maincpu.oq@4a96=4eb90007f2b24e75,
-	maincpu.ow@4db0=0090,
-	maincpu.ow@e2fe=0034,
-	maincpu.ow@ecc0=0034,
-	maincpu.ow@eccc=0034,
-	maincpu.ow@ecda=637c,
-	maincpu.ow@fe90=0dd0,
-	maincpu.ow@27faa=02c4,
-	maincpu.ow@be64e=0090,
-	maincpu.ow@bebae=0090
+        maincpu.ow@49c4=0090,
+        maincpu.ow@49e8=0002,
+        maincpu.ow@4a78=0090,
+        maincpu.oq@4a96=4eb90007f2b24e75,
+        maincpu.ow@4db0=0090,
+        maincpu.ow@e2fe=0034,
+        maincpu.ow@ecc0=0034,
+        maincpu.ow@eccc=0034,
+        maincpu.ow@ecda=637c,
+        maincpu.ow@fe90=0dd0,
+        maincpu.ow@27faa=02c4,
+        maincpu.ow@be64e=0090,
+        maincpu.ow@bebae=0090
       </action>
     </script>
     <script state="off">
       <action>
-	maincpu.ow@49c4=ffff,
-	maincpu.ow@49e8=0004,
-	maincpu.ow@4a78=ffff,
-	maincpu.oq@4a96=4eb82ca6608a4e75,
-	maincpu.ow@4db0=ffff,
-	maincpu.ow@e2fe=00d3,
-	maincpu.ow@ecc0=00d3,
-	maincpu.ow@eccc=00d3,
-	maincpu.ow@ecda=532d,
-	maincpu.ow@fe90=0dce,
-	maincpu.ow@27faa=02b4,
-	maincpu.ow@be64e=ffff,
-	maincpu.ow@bebae=ffff
+        maincpu.ow@49c4=ffff,
+        maincpu.ow@49e8=0004,
+        maincpu.ow@4a78=ffff,
+        maincpu.oq@4a96=4eb82ca6608a4e75,
+        maincpu.ow@4db0=ffff,
+        maincpu.ow@e2fe=00d3,
+        maincpu.ow@ecc0=00d3,
+        maincpu.ow@eccc=00d3,
+        maincpu.ow@ecda=532d,
+        maincpu.ow@fe90=0dce,
+        maincpu.ow@27faa=02b4,
+        maincpu.ow@be64e=ffff,
+        maincpu.ow@bebae=ffff
       </action>
     </script>
   </cheat>
 
   <cheat desc="Training mode (pof)">
-  <!--  author: pof 
+  <!--  author: pof
         origin: http://pof.eslack.org/category/superturbo/
        comment: based on previous cheats by jedpossum & dammit/d9x
    description: infinite time, health recharges when idle or near zero, dizzy ok
@@ -200,20 +200,20 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     <script state="on">
       <action>
         <!-- make sure the round never ends, energy gets recharged to 9f so ew end up in "method2" below -->
-	maincpu.ow@49c4=009f,
-	maincpu.ow@4a78=009f,
-	maincpu.ow@4db0=009f,
-	maincpu.ow@be64e=009f,
-	maincpu.ow@bebae=009f
+        maincpu.ow@49c4=009f,
+        maincpu.ow@4a78=009f,
+        maincpu.ow@4db0=009f,
+        maincpu.ow@be64e=009f,
+        maincpu.ow@bebae=009f
       </action>
     </script>
     <script state="off">
       <action>
-	maincpu.ow@49c4=ffff,
-	maincpu.ow@4a78=ffff,
-	maincpu.ow@4db0=ffff,
-	maincpu.ow@be64e=ffff,
-	maincpu.ow@bebae=ffff
+        maincpu.ow@49c4=ffff,
+        maincpu.ow@4a78=ffff,
+        maincpu.ow@4db0=ffff,
+        maincpu.ow@be64e=ffff,
+        maincpu.ow@bebae=ffff
       </action>
     </script>
     <script state="run">
@@ -235,10 +235,10 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       </action>
       <!-- fix glitches with stun/dizzy & disable KO slowdown when recharging energy using method2 -->
       <action condition="maincpu.pb@FFFF00 gt 0">
-	maincpu.pb@FF84AD=0, maincpu.pw@FF84AE=0, maincpu.pw@FF84AB=0, maincpu.pb@FFFF00=maincpu.pb@FFFF00-1, maincpu.pb@FF82F2=0
+        maincpu.pb@FF84AD=0, maincpu.pw@FF84AE=0, maincpu.pw@FF84AB=0, maincpu.pb@FFFF00=maincpu.pb@FFFF00-1, maincpu.pb@FF82F2=0
       </action>
       <action condition="maincpu.pb@FFFF01 gt 0">
-	maincpu.pb@FF88AD=0, maincpu.pw@FF88AE=0, maincpu.pw@FF88AB=0, maincpu.pb@FFFF01=maincpu.pb@FFFF01-1, maincpu.pb@FF82F2=0
+        maincpu.pb@FF88AD=0, maincpu.pw@FF88AE=0, maincpu.pw@FF88AB=0, maincpu.pb@FFFF01=maincpu.pb@FFFF01-1, maincpu.pb@FF82F2=0
       </action>
     </script>
   </cheat>
@@ -246,7 +246,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
   <cheat desc=" "/>
 
   <cheat desc="Training mode (pof) - Select health recharge delay:">
-  <!--  author: pof 
+  <!--  author: pof
         origin: http://pof.eslack.org/category/superturbo/
        comment: based on previous cheats by jedpossum & dammit/d9x
    description: infinite time, health recharges when idle or near zero, dizzy ok
@@ -284,26 +284,26 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     <script state="on">
       <action>
         <!-- make sure the round never ends, energy gets recharged to 9f so ew end up in "method2" below -->
-	maincpu.ow@49c4=009f,
-	maincpu.ow@4a78=009f,
-	maincpu.ow@4db0=009f,
-	maincpu.ow@be64e=009f,
-	maincpu.ow@bebae=009f,
-	maincpu.pb@FFFF01=0,
-	maincpu.pb@FFFF02=0,
-	maincpu.pb@FFFF03=0
+        maincpu.ow@49c4=009f,
+        maincpu.ow@4a78=009f,
+        maincpu.ow@4db0=009f,
+        maincpu.ow@be64e=009f,
+        maincpu.ow@bebae=009f,
+        maincpu.pb@FFFF01=0,
+        maincpu.pb@FFFF02=0,
+        maincpu.pb@FFFF03=0
       </action>
     </script>
     <script state="off">
       <action>
-	maincpu.ow@49c4=ffff,
-	maincpu.ow@4a78=ffff,
-	maincpu.ow@4db0=ffff,
-	maincpu.ow@be64e=ffff,
-	maincpu.ow@bebae=ffff,
-	maincpu.pb@FFFF01=0,
-	maincpu.pb@FFFF02=0,
-	maincpu.pb@FFFF03=0
+        maincpu.ow@49c4=ffff,
+        maincpu.ow@4a78=ffff,
+        maincpu.ow@4db0=ffff,
+        maincpu.ow@be64e=ffff,
+        maincpu.ow@bebae=ffff,
+        maincpu.pb@FFFF01=0,
+        maincpu.pb@FFFF02=0,
+        maincpu.pb@FFFF03=0
       </action>
     </script>
     <script state="run">
@@ -330,10 +330,10 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       </action>
       <!-- fix glitches with stun/dizzy & disable KO slowdown when recharging energy using method2 -->
       <action condition="maincpu.pb@FFFF00 gt 0">
-	maincpu.pb@FF84AD=0, maincpu.pw@FF84AE=0, maincpu.pw@FF84AB=0, maincpu.pb@FFFF00=maincpu.pb@FFFF00-1, maincpu.pb@FF82F2=0
+        maincpu.pb@FF84AD=0, maincpu.pw@FF84AE=0, maincpu.pw@FF84AB=0, maincpu.pb@FFFF00=maincpu.pb@FFFF00-1, maincpu.pb@FF82F2=0
       </action>
       <action condition="maincpu.pb@FFFF01 gt 0">
-	maincpu.pb@FF88AD=0, maincpu.pw@FF88AE=0, maincpu.pw@FF88AB=0, maincpu.pb@FFFF01=maincpu.pb@FFFF01-1, maincpu.pb@FF82F2=0
+        maincpu.pb@FF88AD=0, maincpu.pw@FF88AE=0, maincpu.pw@FF88AB=0, maincpu.pb@FFFF01=maincpu.pb@FFFF01-1, maincpu.pb@FF82F2=0
       </action>
     </script>
   </cheat>
@@ -350,18 +350,18 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x01">Right</item>
       <item value="0x02">Left</item>
     </parameter>
-      <script state="on">
-  	<action>maincpu.ow@078034=4E71</action>
-	<action>ow@2cd4=4e71,ow@2cd6=4e71,ow@2cd8=4e71</action>
-      </script>
-      <script state="run">
-  	<action>maincpu.ow@078034=4E71</action>
-  	<action>maincpu.pb@FF87E1=param</action>
-      </script>
-      <script state="off">
-  	<action>maincpu.ow@078034=6710</action>
-	<action>ow@2cd4=3B6D,ow@2cd6=0086,ow@2cd8=07E0</action>
-      </script>
+    <script state="on">
+        <action>maincpu.ow@078034=4E71</action>
+        <action>ow@2cd4=4e71,ow@2cd6=4e71,ow@2cd8=4e71</action>
+    </script>
+    <script state="run">
+        <action>maincpu.ow@078034=4E71</action>
+        <action>maincpu.pb@FF87E1=param</action>
+    </script>
+    <script state="off">
+        <action>maincpu.ow@078034=6710</action>
+        <action>ow@2cd4=3B6D,ow@2cd6=0086,ow@2cd8=07E0</action>
+    </script>
   </cheat>
 
   <cheat desc="    PL1 Super">
@@ -397,18 +397,18 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x01">Right</item>
       <item value="0x02">Left</item>
     </parameter>
-      <script state="on">
-  	<action>maincpu.ow@078034=4E71</action>
-	<action>ow@2cda=4e71,ow@2cdc=4e71,ow@2cde=4e71</action>
-      </script>
-      <script state="run">
-  	<action>maincpu.ow@078034=4E71</action>
-  	<action>maincpu.pb@FF8BE1=param</action>
-      </script>
-      <script state="off">
-  	<action>maincpu.ow@078034=6710</action>
+    <script state="on">
+        <action>maincpu.ow@078034=4E71</action>
+        <action>ow@2cda=4e71,ow@2cdc=4e71,ow@2cde=4e71</action>
+    </script>
+    <script state="run">
+        <action>maincpu.ow@078034=4E71</action>
+        <action>maincpu.pb@FF8BE1=param</action>
+    </script>
+    <script state="off">
+        <action>maincpu.ow@078034=6710</action>
         <action>ow@2cda=3B6D,ow@2cdc=008A,ow@2cde=0BE0</action>
-      </script>
+    </script>
   </cheat>
 
   <cheat desc="    PL2 Super">
@@ -436,10 +436,10 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
   <cheat desc="Show combo messages on CPU">
       <script state="on">
-  	<action>maincpu.ow@68f58=4E71</action>
+          <action>maincpu.ow@68f58=4E71</action>
       </script>
       <script state="off">
-  	<action>maincpu.ow@68f58=671A</action>
+          <action>maincpu.ow@68f58=671A</action>
       </script>
   </cheat>
 
@@ -572,10 +572,10 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
   <cheat desc="CPU to Human Player">
   <comment>Human controlled CPU</comment>
       <script state="on">
-  	<action>maincpu.ow@078034=4E71</action>
+          <action>maincpu.ow@078034=4E71</action>
       </script>
       <script state="off">
-  	<action>maincpu.ow@078034=6710</action>
+          <action>maincpu.ow@078034=6710</action>
       </script>
   </cheat>
 
@@ -657,7 +657,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <action>maincpu.pb@FF82CF=param</action>
     </script>
   </cheat>
-    
+
   <cheat desc="Finish this Round Now!">
     <script state="on">
       <action>maincpu.pb@FF8DCE=00</action>
@@ -1138,7 +1138,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         maincpu.pb@FF87DF=param, maincpu.pb@FF880B=0, maincpu.pb@FF87FF=0, maincpu.pb@FF8804=0
       </action>
       <action condition="param gt 0F and param le 1f">
-	temp1=param-0x10,
+        temp1=param-0x10,
         maincpu.pb@FF87DF=temp1, maincpu.pb@FF880B=0, maincpu.pb@FF87FF=8, maincpu.pb@FF8702=0, maincpu.pb@FF8804=1
       </action>
       <action condition="param == 20">
@@ -1210,7 +1210,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     <script state="change">
       <action>maincpu.pb@FF8BDE=param</action>
     </script>
-  </cheat> 
+  </cheat>
 
   <cheat desc="Allow special moves during jump PL2">
     <script state="run">
@@ -1632,7 +1632,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         maincpu.pb@FF8BDF=param, maincpu.pb@FF8C0B=0, maincpu.pb@FF8BFF=0, maincpu.pb@FF8C04=0
       </action>
       <action condition="param gt 0F and param le 1f">
-	temp1=param-0x10,
+        temp1=param-0x10,
         maincpu.pb@FF8BDF=temp1, maincpu.pb@FF8C0B=0, maincpu.pb@FF8BFF=8, maincpu.pb@FF8B02=0, maincpu.pb@FF8C04=1
       </action>
       <action condition="param == 20">
