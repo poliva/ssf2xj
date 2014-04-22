@@ -349,6 +349,8 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x00">Neutral (Stand)</item>
       <item value="0x01">Right</item>
       <item value="0x02">Left</item>
+      <item value="0xff">Throw-Right (fierce throw)</item>
+      <item value="0xfe">Throw-Left (fierce throw)</item>
     </parameter>
     <script state="on">
         <action>maincpu.ow@078034=4E71</action>
@@ -356,7 +358,11 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
     <script state="run">
         <action>maincpu.ow@078034=4E71</action>
-        <action>maincpu.pb@FF87E1=param</action>
+        <action condition="param == 0xff and frame % 2 == 0">maincpu.pw@FF87E0=0001</action>
+        <action condition="param == 0xff and frame % 2 != 0">maincpu.pw@FF87E0=0041</action>
+        <action condition="param == 0xfe and frame % 2 == 0">maincpu.pw@FF87E0=0002</action>
+        <action condition="param == 0xfe and frame % 2 != 0">maincpu.pw@FF87E0=0042</action>
+        <action condition="param lt 0x0f">maincpu.pb@FF87E1=param</action>
     </script>
     <script state="off">
         <action>maincpu.pw@FF87E0=0</action>
@@ -397,6 +403,8 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x00">Neutral (Stand)</item>
       <item value="0x01">Right</item>
       <item value="0x02">Left</item>
+      <item value="0xff">Throw-Right (fierce throw)</item>
+      <item value="0xfe">Throw-Left (fierce throw)</item>
     </parameter>
     <script state="on">
         <action>maincpu.ow@078034=4E71</action>
@@ -404,7 +412,11 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
     <script state="run">
         <action>maincpu.ow@078034=4E71</action>
-        <action>maincpu.pb@FF8BE1=param</action>
+        <action condition="param == 0xff and frame % 2 == 0">maincpu.pw@FF8BE0=0001</action>
+        <action condition="param == 0xff and frame % 2 != 0">maincpu.pw@FF8BE0=0041</action>
+        <action condition="param == 0xfe and frame % 2 == 0">maincpu.pw@FF8BE0=0002</action>
+        <action condition="param == 0xfe and frame % 2 != 0">maincpu.pw@FF8BE0=0042</action>
+        <action condition="param lt 0x0f">maincpu.pb@FF8BE1=param</action>
     </script>
     <script state="off">
         <action>maincpu.pw@FF8BE0=0</action>
