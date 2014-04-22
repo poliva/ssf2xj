@@ -110,7 +110,7 @@
         origin: http://www.mamecheat.co.uk/forums/viewtopic.php?f=4&t=4103#p13288
        comment: consolidated into single cheat by pof
    description: recharges health bar when below 33.3%
-      glitches: sometimes when health is recharged oponent gets hit or pushed back
+      glitches: sometimes when health is recharged opponent gets hit or pushed back
    -->
     <script state="run">
       <action>maincpu.pw@FF8DCE=9928</action>
@@ -221,7 +221,7 @@
 
   <cheat desc=" "/>
 
-  <cheat desc="Training mode (pof) v2 - Select health recharge delay:">
+  <cheat desc="Training mode (pof) - Select health recharge delay:">
   <!--  author: pof 
         origin: http://pof.eslack.org/category/superturbo/
        comment: based on previous cheats by jedpossum & dammit/d9x
@@ -314,18 +314,7 @@
     </script>
   </cheat>
 
-<!--
-wpset 0xFF87E0,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87E0, wpdata, PC; go}
-wpset 0xFF87E2,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87E2, wpdata, PC; go}
-wpset 0xFF87F4,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87F4, wpdata, PC; go}
-wpset 0xFF87F6,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87F6, wpdata, PC; go}
-
-2CC8
-2CDA
-2DF2
-
--->
-  <cheat desc="    PL1 action">
+  <cheat desc="    PL1 Action">
     <parameter>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
@@ -351,7 +340,28 @@ wpset 0xFF87F6,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87F6, 
       </script>
   </cheat>
 
-  <cheat desc="    PL2 action">
+  <cheat desc="    PL1 Super">
+    <parameter>
+      <item value="0x30">Infinite</item>
+      <item value="0x00">Empty</item>
+    </parameter>
+    <script state="run">
+      <action condition="maincpu.rw@FF8008 == A">maincpu.pb@FF8702=param</action>
+    </script>
+  </cheat>
+
+  <cheat desc="    PL1 Dizzy">
+    <parameter>
+      <item value="0x00">Never get dizzied</item>
+      <item value="0x40">Always get dizzied</item>
+    </parameter>
+    <script state="run">
+      <action>maincpu.pw@FF84AA=param</action> <!--timeout-->
+      <action>maincpu.pw@FF84AC=param</action> <!--damage-->
+    </script>
+  </cheat>
+
+  <cheat desc="    PL2 Action">
     <parameter>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
@@ -375,6 +385,27 @@ wpset 0xFF87F6,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87F6, 
   	<action>maincpu.ow@078034=6710</action>
         <action>ow@2cda=3B6D,ow@2cdc=008A,ow@2cde=0BE0</action>
       </script>
+  </cheat>
+
+  <cheat desc="    PL2 Super">
+    <parameter>
+      <item value="0x30">Infinite</item>
+      <item value="0x00">Empty</item>
+    </parameter>
+    <script state="run">
+      <action condition="maincpu.rw@FF8008 == A">maincpu.pb@FF8B02=param</action>
+    </script>
+  </cheat>
+
+  <cheat desc="    PL2 Dizzy">
+    <parameter>
+      <item value="0x00">Never get dizzied</item>
+      <item value="0x40">Always get dizzied</item>
+    </parameter>
+    <script state="run">
+      <action>maincpu.pw@FF88AA=param</action> <!--timeout-->
+      <action>maincpu.pw@FF88AC=param</action> <!--damage-->
+    </script>
   </cheat>
 
   <cheat desc=" "/>
@@ -650,30 +681,9 @@ wpset 0xFF87F6,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87F6, 
     </script>
   </cheat>
 
-  <cheat desc="Set Super PL1">
-    <parameter>
-      <item value="0x30">Infinite</item>
-      <item value="0x00">Empty</item>
-    </parameter>
-    <script state="run">
-      <action condition="maincpu.rw@FF8008 == A">maincpu.pb@FF8702=param</action>
-    </script>
-  </cheat>
-
   <cheat desc="Have Sprite Trails PL1">
     <script state="run">
       <action>maincpu.pb@FF8703=01</action>
-    </script>
-  </cheat>
-
-  <cheat desc="PL1 dizzy status">
-    <parameter>
-      <item value="0x00">Never get dizzied</item>
-      <item value="0x40">Always get dizzied</item>
-    </parameter>
-    <script state="run">
-      <action>maincpu.pw@FF84AA=param</action> <!--timeout-->
-      <action>maincpu.pw@FF84AC=param</action> <!--damage-->
     </script>
   </cheat>
 
@@ -1165,30 +1175,9 @@ wpset 0xFF87F6,2,w,1,{printf "Write @ %X=%X(%X) with PC=%X", wpaddr, pb@FF87F6, 
     </script>
   </cheat>
 
-  <cheat desc="Set Super PL2">
-    <parameter>
-      <item value="0x30">Infinite</item>
-      <item value="0x00">Empty</item>
-    </parameter>
-    <script state="run">
-      <action condition="maincpu.rw@FF8008 == A">maincpu.pb@FF8B02=param</action>
-    </script>
-  </cheat>
-
   <cheat desc="Have Sprite Trails PL2">
     <script state="run">
       <action>maincpu.pb@FF8B03=01</action>
-    </script>
-  </cheat>
-
-  <cheat desc="PL2 dizzy status">
-    <parameter>
-      <item value="0x00">Never get dizzied</item>
-      <item value="0x40">Always get dizzied</item>
-    </parameter>
-    <script state="run">
-      <action>maincpu.pw@FF88AA=param</action> <!--timeout-->
-      <action>maincpu.pw@FF88AC=param</action> <!--damage-->
     </script>
   </cheat>
 
