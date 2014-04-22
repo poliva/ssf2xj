@@ -359,6 +359,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         <action>maincpu.pb@FF87E1=param</action>
     </script>
     <script state="off">
+        <action>maincpu.pw@FF87E0=0</action>
         <action>maincpu.ow@078034=6710</action>
         <action>ow@2cd4=3B6D,ow@2cd6=0086,ow@2cd8=07E0</action>
     </script>
@@ -406,6 +407,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         <action>maincpu.pb@FF8BE1=param</action>
     </script>
     <script state="off">
+        <action>maincpu.pw@FF8BE0=0</action>
         <action>maincpu.ow@078034=6710</action>
         <action>ow@2cda=3B6D,ow@2cdc=008A,ow@2cde=0BE0</action>
     </script>
