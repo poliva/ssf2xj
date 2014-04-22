@@ -314,7 +314,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <action condition="maincpu.pb@ff8851==14 or maincpu.pb@ff8851==E">maincpu.pb@FFFF03=param</action>
       <action condition="maincpu.pb@FFFF02 gt 0 and param != 0xff">maincpu.pb@FFFF02=maincpu.pb@FFFF02-1</action>
       <action condition="maincpu.pb@FFFF03 gt 0 and param != 0xff">maincpu.pb@FFFF03=maincpu.pb@FFFF03-1</action>
-      <!-- method1: recharge energy when both players are idle -->
+      <!-- method1: recharge energy when opponent is idle/crouching and we're not blocking or after being hit/thrown -->
       <action condition="((maincpu.pb@ff8451!=14 and maincpu.pb@ff8451!=E and maincpu.pb@ff8451!=8) and maincpu.pw@ff847a lt 90 and (maincpu.pb@ff8851==2 or maincpu.pb@ff8851==0) and maincpu.pb@FFFF02==0)">
         maincpu.pw@ff8478=90, maincpu.pw@ff847a=90, maincpu.pw@ff860a=90
       </action>
@@ -322,10 +322,10 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         maincpu.pw@ff8878=90, maincpu.pw@ff887a=90, maincpu.pw@ff8a0a=90
       </action>
       <!-- method2: recharge energy when round is about to end -->
-      <action condition="(maincpu.pw@ff847a lt f and (maincpu.pb@ff8451==14 or maincpu.pb@ff8451==E) and maincpu.pb@FFFF00==0) or (maincpu.pw@ff8478 gt 90 or maincpu.pb@ff860b gt 90 or maincpu.pb@ff860b==0)">
+      <action condition="(maincpu.pw@ff847a lt 2 and (maincpu.pb@ff8451==14 or maincpu.pb@ff8451==E) and maincpu.pb@FFFF00==0) or (maincpu.pw@ff8478 gt 90 or maincpu.pb@ff860b gt 90 or maincpu.pb@ff860b==0)">
         maincpu.pw@ff8478=90, maincpu.pw@ff847a=90, maincpu.pw@ff860a=90, maincpu.pb@FFFF00=0x20, maincpu.pb@FF82F2=0
       </action>
-      <action condition="(maincpu.pw@ff887a lt f and (maincpu.pb@ff8851==14 or maincpu.pb@ff8851==E) and maincpu.pb@FFFF01==0) or (maincpu.pw@ff8878 gt 90 or maincpu.pb@ff8a0b gt 90 or maincpu.pb@ff8a0b==0)">
+      <action condition="(maincpu.pw@ff887a lt 2 and (maincpu.pb@ff8851==14 or maincpu.pb@ff8851==E) and maincpu.pb@FFFF01==0) or (maincpu.pw@ff8878 gt 90 or maincpu.pb@ff8a0b gt 90 or maincpu.pb@ff8a0b==0)">
         maincpu.pw@ff8878=90, maincpu.pw@ff887a=90, maincpu.pw@ff8a0a=90, maincpu.pb@FFFF01=0x20, maincpu.pb@FF82F2=0
       </action>
       <!-- fix glitches with stun/dizzy & disable KO slowdown when recharging energy using method2 -->
