@@ -523,12 +523,19 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x50">Turbo 4 (Japan)/Turbo 3 (other)</item>
       <item value="0x00">Maximum frameskip (double speed)</item>
     </parameter>
+    <script state="on">
+      <action>temp0=maincpu.pb@FF83A9</action> <!--operator menu setting-->
+    </script>
     <script state="run">
       <action>maincpu.pb@FF8CD3=param</action>
+      <action condition="param==0x80">maincpu.pb@FF83A9=0</action>
+      <action condition="param==0x70">maincpu.pb@FF83A9=1</action>
+      <action condition="param==0x60">maincpu.pb@FF83A9=2</action>
+      <action condition="param==0x50">maincpu.pb@FF83A9=3</action>
     </script>
     <script state="off">
-      <action>temp0=maincpu.rb@FF1AA6</action> <!--operator menu setting-->
-      <action>temp1=maincpu.rb@FF8CD5</action> <!--free select setting-->
+      <action>temp1=maincpu.pb@FF8CD5</action> <!--free select setting-->
+      <action>maincpu.pb@FF83A9=temp0</action> <!--operator menu setting-->
       <action condition="temp0==0 or (temp0==4 and temp1==0)">maincpu.pb@FF8CD3=0x80</action>
       <action condition="temp0==1 or (temp0==4 and temp1==1)">maincpu.pb@FF8CD3=0x70</action>
       <action condition="temp0==2 or (temp0==4 and temp1==2)">maincpu.pb@FF8CD3=0x60</action>
