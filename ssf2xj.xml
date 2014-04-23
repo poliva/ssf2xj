@@ -597,7 +597,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
   <cheat desc="Free Play">
     <script state="run">
-      <action>maincpu.pb@FF82DF=0x01</action>
+      <action>maincpu.pb@FF82DF=0x01,maincpu.pb@FF8342=0x12</action>
     </script>
   </cheat>
 
