@@ -655,6 +655,19 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
   </cheat>
 
+  <cheat desc="Random Stages">
+  <!--  author: jedpossum
+        origin: http://forums.shoryuken.com/discussion/comment/8809939/#Comment_8809939 -->
+    <script state="on">
+      <action>maincpu.ow@39A6=4EB9, maincpu.od@39A8=000CCC10</action>
+      <action>maincpu.od@CCC10=302D61D2, maincpu.od@CCC14=0240000F, maincpu.od@CCC18=3B400C4E, maincpu.ow@CCC1C=D040, maincpu.ow@CCC1E=4E75</action>
+    </script>
+    <script state="off">
+      <action>maincpu.ow@39A6=3B71, maincpu.od@39A8=00000C4E</action>
+      <action>maincpu.od@CCC10=0, maincpu.od@CCC14=0, maincpu.od@CCC18=0, maincpu.ow@CCC1C=0, maincpu.ow@CCC1E=0</action>
+    </script>
+  </cheat>
+
   <cheat desc="Select Ending">
     <parameter>
       <item value="1">No Losses (Akuma/Gouki)</item>
