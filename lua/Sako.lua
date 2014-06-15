@@ -661,7 +661,7 @@ buffersize   = 16     --how many lines to show
 margin_left  = 1      --space from the left of the screen, in tiles, for player 1
 margin_right = 2      --space from the right of the screen, in tiles, for player 2
 margin_top   = 9      --space from the top of the screen, in tiles
-timeout      = 120    --how many idle frames until old lines are cleared on the next input
+timeout      = 15     --how many idle frames until old lines are cleared on the next input
 screenwidth  = 256    --pixel width of the screen for spacing calculations (only applies if emu.screenwidth() is unavailable)
 
 --Key bindings below only apply if the emulator does not support Lua hotkeys.
