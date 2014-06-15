@@ -34,6 +34,8 @@
 --
 --You may modify or use any part of the code as you wish,
 --	just make sure you "remember" who coded it on the first place!
+--
+-- add permisive mode modification by @pof (June 2014)
 
 --## Constants ##--
 
@@ -43,7 +45,9 @@ STATE_FRAMELIMIT = 30
 --## Global Vars ##--
 
 sako_analysis = true
-show_debug = false
+show_debug = true
+permissive = true
+initial_dist=0
 
 msg1 = ""
 msg2 = ""
@@ -193,7 +197,9 @@ end
 
 --Returns true if too close, false if not, character dependent
 local function too_close()	
-	if (calc_range() < min_dist) then
+	if permissive and (calc_range() < min_dist-5) then
+		return true
+	elseif not permissive and (calc_range() < min_dist) then
 		return true
 	else
 		return false
@@ -291,8 +297,14 @@ local function update_msg(er_code)
 	elseif er_code == 12 then
 		msg1 = "Good, you did it well. The only mistake is that you're "
 		msg2 = "taking too long to block after releasing the Punch buttons."
+		if (initial_dist < min_dist) then
+			msg3 = "Now try again from a bit farther."
+		end
 	else
 		msg1 = "Well done."
+		if (initial_dist < min_dist) then
+			msg2 = "Now try again from a bit farther."
+		end
 		msg_fcount = MSG_FRAMELIMIT-60
 	end
 	return
@@ -461,16 +473,21 @@ local function sako_logic()
 --##### STATE 0: Waiting for Jab #####--
 	if state == 0 then
 		if ((too_close()) and not(p1_typhoon())) then
+			if (p1_curr_anim_frame_is(jab_hitting_frame)) then
+				initial_dist=calc_range()
+			end
 			reset_state()
 			update_msg(1)	--too close, no point in training sakos from this range
 			return
 		elseif p1_curr_anim_frame_is(jab_hitting_frame) then
 			if p2_is_on_hitfreeze() then
+				initial_dist=calc_range()
 				inc_state()
 				reset_msg()	--jab hit the opponent from far enough, sends to next state
 				return
 			end
 		elseif (p1_curr_anim_frame_is(jab_recovery_frame)) and not(p2_is_on_hitstun()) then
+			initial_dist=calc_range()
 			reset_state()
 			update_msg(2) --jab didnt hit the opponent, he is too far for it
 		end
@@ -484,7 +501,7 @@ local function sako_logic()
 			update_msg(3)
 			return
 		elseif ((p1_is_on_left_side()) and (p1_typhoon_input_code() == 8)) then -- If the player already did the Typhoon
-			if p1_super_input_direction_code() == 5 then --if first direction was up and the second was left
+			if p1_super_input_direction_code() == 5 or (p1_super_input_direction_code() == 0 and permissive) then --if first direction was up and the second was left
 				if p1_punches_are_being_held() == 7 then --go to next state		
 					inc_state()
 					reset_msg()
@@ -494,10 +511,9 @@ local function sako_logic()
 					update_msg(6)
 					return
 				end
-			elseif p1_super_input_direction_code() == 0 then --the direction thawk used to walk was registered in the tphoon input, wrong
+			elseif p1_super_input_direction_code() == 0 and not permissive then --the direction thawk used to walk was registered in the tphoon input, wrong
 				reset_state()
 				update_msg(51)
-
 				return
 			else			
 				reset_state()
@@ -505,7 +521,7 @@ local function sako_logic()
 				return
 			end
 		elseif (not(p1_is_on_left_side()) and (p1_typhoon_input_code() == 8)) then -- If the player already did the Typhoon
-			if p1_super_input_direction_code() == 4 then --if first direction was up and the second was right
+			if p1_super_input_direction_code() == 4 or (p1_super_input_direction_code() == 2 and permissive) then --if first direction was up and the second was right
 				if p1_punches_are_being_held() == 7 then --go to next state		
 					inc_state()
 					reset_msg()
@@ -515,7 +531,7 @@ local function sako_logic()
 					update_msg(6)
 					return
 				end
-			elseif p1_super_input_direction_code() == 2 then --the direction thawk used to walk was registered in the tphoon input, wrong
+			elseif p1_super_input_direction_code() == 2 and not permissive then --the direction thawk used to walk was registered in the tphoon input, wrong
 				reset_state()
 				update_msg(52)
 				return
@@ -534,7 +550,7 @@ local function sako_logic()
 			reset_state()
 			update_msg(7)
 			return
-		elseif p1_punches_are_being_held() < 3 then --releasing PPP too soon, fierce is ignored for leniency
+		elseif p1_punches_are_being_held() < 3 and not permissive then --releasing PPP too soon, fierce is ignored for leniency
 			reset_state()
 			update_msg(81)
 			return
@@ -618,7 +634,7 @@ local function draw_messages()
 
 	--Draw Stuff
 	if show_debug then		
-		gui.text(128,10,"State: " .. state .. "  Input: " .. p1_typhoon_input_code() .. "  Direction: " .. p1_super_input_direction_code())
+		gui.text(112,10,"State: " .. state .. "  Input: " .. p1_typhoon_input_code() .. "  Direction: " .. p1_super_input_direction_code() .. " Dist: " .. initial_dist)
 	end
 
 	--Sako tips
@@ -1531,12 +1547,20 @@ input.registerhotkey(4, function()
 	print("---------------------------------------------------------------------------------")
 end)
 
+input.registerhotkey(5, function()
+	permissive = not permissive
+	print("---------------------------------------------------------------------------------")
+	print("Permisive mode " .. (permissive and "ON" or "OFF"))
+	print("---------------------------------------------------------------------------------")
+end)
+
 print("Sako Trainning Script by Born2SPD v0.1")
 print("---------------------------------------------------------------------------------")
 print("Lua Hotkey 1: Display/Hide Sako Tick Execution Tips")
 print("Lua Hotkey 2: Display/Hide Hitboxes")
 print("Lua Hotkey 3: Display/Hide Scrolling Input")
 print("Lua Hotkey 4: Clean the messages on screen")
+print("Lua Hotkey 5: Toggle permissive mode on/off")
 print("---------------------------------------------------------------------------------")
 
 
