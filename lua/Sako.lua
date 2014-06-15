@@ -743,7 +743,7 @@ local recordpath = "framedump" --(relative to resourcepath)
 --print("Press " .. (input.registerhotkey and "Lua hotkey 5" or recordkey) .. " to start/stop recording to '" .. recordpath .. "' folder")
 --print()
 
-require "gd"
+local gd = require "gd"
 local minimum_tile_size, maximum_tile_size = 8, 32
 local icon_size, image_icon_size = minimum_tile_size
 local thisframe, lastframe, module, keyset, changed = {}, {}
