@@ -194,7 +194,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
   <!--  author: jedpossum
         origin: http://forums.shoryuken.com/discussion/comment/8902051/#Comment_8902051
        comment: ported to mame cheat format by pof
-   description: infinite time, super recharges, health recharges, dizzy ok
+   description: infinite time, super recharges, health recharges, dizzy ok, random stages
       glitches: minor glitches when health is empty
    -->
     <script state="on">
@@ -208,32 +208,35 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@19DA=000D,
 	maincpu.ow@19DC=6A80,
 
+	<!-- random stages -->
 	maincpu.ow@39a6=4EB9,
 	maincpu.ow@39a8=000c,
 	maincpu.ow@39aa=cc10,
+	<!-- / -->
 
-	maincpu.ow@49c4=0000,
-	maincpu.ow@49e8=0002,
+	maincpu.ow@49c4=0000, <!-- throw3 (life refill) -->
+	maincpu.ow@49e8=0002, <!-- remove ko knockdown (throw3) -->
 
-	maincpu.ow@4a78=0000,
+	maincpu.ow@4a78=0000, <!-- throw (life refill) -->
 
-	maincpu.ow@4a96=4EB9,
+	maincpu.ow@4a96=4EB9, <!-- throw1 ko slowdown -->
 	maincpu.ow@4a98=0007,
 	maincpu.ow@4a9a=f2b2,
 
-	maincpu.ow@4db0=0000,
+	maincpu.ow@4db0=0000, <!-- throw (life refill) -->
 
-	maincpu.ow@e2fe=0034,
+	maincpu.ow@e2fe=0034, <!-- music (character select) -->
 
-	maincpu.ow@ecc0=0034,
-	maincpu.ow@eccc=0034,
+	maincpu.ow@ecc0=0034, <!-- music (character select) -->
+	maincpu.ow@eccc=0034, <!-- music (character select) -->
 
-	maincpu.ow@fe90=0dd0,
+	maincpu.ow@fe90=0dd0, <!-- timer (mid match) -->
 
-	maincpu.ow@be64e=0000,
+	maincpu.ow@be64e=0000, <!-- regular hits (life refill) -->
 
-	maincpu.ow@bebae=0000,
+	maincpu.ow@bebae=0000, <!-- projectiles (life refill) -->
 
+	<!-- random stages -->
 	maincpu.ow@ccc10=302D,
 	maincpu.ow@ccc12=61D2,
 	maincpu.ow@ccc14=0240,
@@ -242,6 +245,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@ccc1a=0c4e,
 	maincpu.ow@ccc1c=d040,
 	maincpu.ow@ccc1e=4e75,
+	<!-- / -->
 
 	<!--
 	;D6A80 (56A80)
