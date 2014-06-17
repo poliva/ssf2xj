@@ -147,7 +147,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
   </cheat>
 
-  <cheat desc="Training mode (jedpossum)">
+  <cheat desc="Training mode beta (jedpossum)">
   <!--  author: jedpossum
         origin: http://forums.shoryuken.com/discussion/comment/8699161/#Comment_8699161
        comment: ported to mame cheat format by pof
@@ -186,6 +186,169 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         maincpu.ow@27faa=02b4,
         maincpu.ow@be64e=ffff,
         maincpu.ow@bebae=ffff
+      </action>
+    </script>
+  </cheat>
+
+  <cheat desc="Training mode Hack 1.0 (jedpossum)">
+  <!--  author: jedpossum
+        origin: http://forums.shoryuken.com/discussion/comment/8902051/#Comment_8902051
+       comment: ported to mame cheat format by pof
+   description: infinite time, super recharges, health recharges, dizzy ok
+      glitches: minor glitches when health is empty
+   -->
+    <script state="on">
+      <action>
+
+<!--
+;19D8
+4EB9 000D 6A80		jsr $d6a80.l;
+-->
+
+	maincpu.ow@19D8=4EB9,
+	maincpu.ow@19DA=000D,
+	maincpu.ow@19DC=6A80,
+
+
+	maincpu.ow@39a6=4EB9,
+	maincpu.ow@39a8=000c,
+	maincpu.ow@39aa=cc10,
+
+	maincpu.ow@49c4=0000,
+	maincpu.ow@49e8=0002,
+
+	maincpu.ow@4a78=0000,
+
+	maincpu.ow@4a96=4EB9,
+	maincpu.ow@4a98=0007,
+	maincpu.ow@4a9a=f2b2,
+
+	maincpu.ow@4db0=0000,
+
+	maincpu.ow@e2fe=0034,
+
+	maincpu.ow@ecc0=0034,
+	maincpu.ow@eccc=0034,
+
+	maincpu.ow@fe90=0dd0,
+
+	maincpu.ow@be64e=0000,
+
+	maincpu.ow@bebae=0000,
+
+
+	maincpu.ow@ccc10=302D,
+	maincpu.ow@ccc12=61D2,
+	maincpu.ow@ccc14=0240,
+	maincpu.ow@ccc16=000f,
+	maincpu.ow@ccc18=3b40,
+	maincpu.ow@ccc1a=0c4e,
+	maincpu.ow@ccc1c=d040,
+	maincpu.ow@ccc1e=4e75,
+
+
+<!--
+;D6A80 (56A80)
+;Address setting 28 bytes
+41F9 00FF 844E			lea $ff844e,A0
+43F9 00FF 884E			lea $ff884e,A1
+45F9 00FF F100			lea $fff100,A2; 1P timer - Send undamned network memory test
+6108				bsr; PC+$08
+C149				exg A0,A1
+45F9 00FF F200			lea $fff200,A2; 2P timer
+-->
+
+        maincpu.ow@D6A80=41F9,
+	maincpu.ow@D6A82=00FF,
+	maincpu.ow@D6A84=844E,
+
+	maincpu.ow@D6A86=43F9,
+	maincpu.ow@D6A88=00FF,
+	maincpu.ow@D6A8A=884E,
+
+	maincpu.ow@D6A8C=45F9,
+	maincpu.ow@D6A8E=00FF,
+	maincpu.ow@D6A90=F100,
+
+	maincpu.ow@D6A92=6108,
+	maincpu.ow@D6A94=C149,
+
+	maincpu.ow@D6A96=45F9,
+	maincpu.ow@D6A98=00FF,
+	maincpu.ow@D6A9A=F200,
+
+<!--
+;Timer set and countdown 6
+4A2A 0000			tst.b ($0,A2);checks if there is a timer already
+6710	 			beq; PC+$?? | Timer = 0 branch to refill
+-->
+
+	maincpu.ow@D6A9C=4A2A,
+	maincpu.ow@D6A9E=0000,
+
+	maincpu.ow@D6AA0=6710,
+
+<!--
+;Hurt check and Subtraction 16 bytes
+4A29 0003			tst.b ($3,A1)
+6608				bne; PC+$08 | If hurt skip subtraction
+102A 0000			move.b ($0,A2), D0
+5300				subq.b #1,D0
+1480				move.b D0, (A2)
+4E75				rts
+-->
+
+	maincpu.ow@D6AA2=4A29,
+	maincpu.ow@D6AA4=0003,
+
+	maincpu.ow@D6AA6=6608,
+
+	maincpu.ow@D6AA8=102A,
+	maincpu.ow@D6AAA=0000,
+
+	maincpu.ow@D6AAC=5300,
+	maincpu.ow@D6AAE=1480,
+	maincpu.ow@D6AB0=4E75,
+
+<!--
+;Refill 30 bytes
+157C 0096 0000 			move.b #$96, ($0,A2); Refill Timer
+117C 0030 02B4			move.b #$30, ($2B4,A0); Refill Super
+303C 0090			move.w #$90, D0
+3340 01BC			move.w D0, ($1bc, A1); Refill Graphic
+3340 002A			move.w D0, ($2a, A1); Refill Life
+3340 002C 			move.w D0, ($2c, A1); Refill Life
+4E75				rts
+-->
+
+	maincpu.ow@D6AB2=157C,
+	maincpu.ow@D6AB4=0096,
+	maincpu.ow@D6AB6=0000,
+
+	maincpu.ow@D6AB8=117C,
+	maincpu.ow@D6ABA=0030,
+	maincpu.ow@D6ABC=02B4,
+
+	maincpu.ow@D6ABE=303C,
+	maincpu.ow@D6AC0=0090,
+
+	maincpu.ow@D6AC2=3340,
+	maincpu.ow@D6AC4=01BC,
+
+	maincpu.ow@D6AC6=3340,
+	maincpu.ow@D6AC8=002A,
+
+	maincpu.ow@D6ACA=3340,
+	maincpu.ow@D6ACC=002C,
+
+	maincpu.ow@D6ACE=4E75
+      </action>
+    </script>
+    <script state="off">
+      <action>
+	maincpu.ow@19D8=4EB9,
+	maincpu.ow@19DA=0001,
+	maincpu.ow@19DC=0EFC,
       </action>
     </script>
   </cheat>
@@ -655,7 +818,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
   </cheat>
 
-  <cheat desc="Random Stages">
+  <cheat desc="Random Stages"><comment>It is a known bug that'll you'll keep fighting Ryu indefinitely in single player.</comment>
   <!--  author: jedpossum
         origin: http://forums.shoryuken.com/discussion/comment/8809939/#Comment_8809939 -->
     <script state="on">
