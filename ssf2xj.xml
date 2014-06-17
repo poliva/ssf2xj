@@ -200,15 +200,13 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     <script state="on">
       <action>
 
-<!--
-;19D8
-4EB9 000D 6A80		jsr $d6a80.l;
--->
-
+	<!--
+	;19D8
+	4EB9 000D 6A80		jsr $d6a80.l;
+	-->
 	maincpu.ow@19D8=4EB9,
 	maincpu.ow@19DA=000D,
 	maincpu.ow@19DC=6A80,
-
 
 	maincpu.ow@39a6=4EB9,
 	maincpu.ow@39a8=000c,
@@ -236,7 +234,6 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
 	maincpu.ow@bebae=0000,
 
-
 	maincpu.ow@ccc10=302D,
 	maincpu.ow@ccc12=61D2,
 	maincpu.ow@ccc14=0240,
@@ -246,101 +243,82 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@ccc1c=d040,
 	maincpu.ow@ccc1e=4e75,
 
-
-<!--
-;D6A80 (56A80)
-;Address setting 28 bytes
-41F9 00FF 844E			lea $ff844e,A0
-43F9 00FF 884E			lea $ff884e,A1
-45F9 00FF F100			lea $fff100,A2; 1P timer - Send undamned network memory test
-6108				bsr; PC+$08
-C149				exg A0,A1
-45F9 00FF F200			lea $fff200,A2; 2P timer
--->
-
+	<!--
+	;D6A80 (56A80)
+	;Address setting 28 bytes
+	41F9 00FF 844E			lea $ff844e,A0
+	43F9 00FF 884E			lea $ff884e,A1
+	45F9 00FF F100			lea $fff100,A2; 1P timer - Send undamned network memory test
+	6108				bsr; PC+$08
+	C149				exg A0,A1
+	45F9 00FF F200			lea $fff200,A2; 2P timer
+	-->
         maincpu.ow@D6A80=41F9,
 	maincpu.ow@D6A82=00FF,
 	maincpu.ow@D6A84=844E,
-
 	maincpu.ow@D6A86=43F9,
 	maincpu.ow@D6A88=00FF,
 	maincpu.ow@D6A8A=884E,
-
 	maincpu.ow@D6A8C=45F9,
 	maincpu.ow@D6A8E=00FF,
 	maincpu.ow@D6A90=F100,
-
 	maincpu.ow@D6A92=6108,
 	maincpu.ow@D6A94=C149,
-
 	maincpu.ow@D6A96=45F9,
 	maincpu.ow@D6A98=00FF,
 	maincpu.ow@D6A9A=F200,
 
-<!--
-;Timer set and countdown 6
-4A2A 0000			tst.b ($0,A2);checks if there is a timer already
-6710	 			beq; PC+$?? | Timer = 0 branch to refill
--->
-
+	<!--
+	;Timer set and countdown 6
+	4A2A 0000			tst.b ($0,A2);checks if there is a timer already
+	6710	 			beq; PC+$?? | Timer = 0 branch to refill
+	-->
 	maincpu.ow@D6A9C=4A2A,
 	maincpu.ow@D6A9E=0000,
-
 	maincpu.ow@D6AA0=6710,
 
-<!--
-;Hurt check and Subtraction 16 bytes
-4A29 0003			tst.b ($3,A1)
-6608				bne; PC+$08 | If hurt skip subtraction
-102A 0000			move.b ($0,A2), D0
-5300				subq.b #1,D0
-1480				move.b D0, (A2)
-4E75				rts
--->
-
+	<!--
+	;Hurt check and Subtraction 16 bytes
+	4A29 0003			tst.b ($3,A1)
+	6608				bne; PC+$08 | If hurt skip subtraction
+	102A 0000			move.b ($0,A2), D0
+	5300				subq.b #1,D0
+	1480				move.b D0, (A2)
+	4E75				rts
+	-->
 	maincpu.ow@D6AA2=4A29,
 	maincpu.ow@D6AA4=0003,
-
 	maincpu.ow@D6AA6=6608,
-
 	maincpu.ow@D6AA8=102A,
 	maincpu.ow@D6AAA=0000,
-
 	maincpu.ow@D6AAC=5300,
 	maincpu.ow@D6AAE=1480,
 	maincpu.ow@D6AB0=4E75,
 
-<!--
-;Refill 30 bytes
-157C 0096 0000 			move.b #$96, ($0,A2); Refill Timer
-117C 0030 02B4			move.b #$30, ($2B4,A0); Refill Super
-303C 0090			move.w #$90, D0
-3340 01BC			move.w D0, ($1bc, A1); Refill Graphic
-3340 002A			move.w D0, ($2a, A1); Refill Life
-3340 002C 			move.w D0, ($2c, A1); Refill Life
-4E75				rts
--->
-
+	<!--
+	;Refill 30 bytes
+	157C 0096 0000 			move.b #$96, ($0,A2); Refill Timer
+	117C 0030 02B4			move.b #$30, ($2B4,A0); Refill Super
+	303C 0090			move.w #$90, D0
+	3340 01BC			move.w D0, ($1bc, A1); Refill Graphic
+	3340 002A			move.w D0, ($2a, A1); Refill Life
+	3340 002C 			move.w D0, ($2c, A1); Refill Life
+	4E75				rts
+	-->
 	maincpu.ow@D6AB2=157C,
 	maincpu.ow@D6AB4=0096,
 	maincpu.ow@D6AB6=0000,
-
 	maincpu.ow@D6AB8=117C,
 	maincpu.ow@D6ABA=0030,
 	maincpu.ow@D6ABC=02B4,
-
 	maincpu.ow@D6ABE=303C,
 	maincpu.ow@D6AC0=0090,
-
 	maincpu.ow@D6AC2=3340,
 	maincpu.ow@D6AC4=01BC,
-
 	maincpu.ow@D6AC6=3340,
 	maincpu.ow@D6AC8=002A,
-
 	maincpu.ow@D6ACA=3340,
 	maincpu.ow@D6ACC=002C,
-
 	maincpu.ow@D6ACE=4E75
       </action>
     </script>
@@ -349,6 +327,70 @@ C149				exg A0,A1
 	maincpu.ow@19D8=4EB9,
 	maincpu.ow@19DA=0001,
 	maincpu.ow@19DC=0EFC,
+	maincpu.ow@39a6=3B71,
+	maincpu.ow@39a8=0000,
+	maincpu.ow@39aa=0c4e,
+	maincpu.ow@49c4=ffff,
+	maincpu.ow@49e8=0004,
+	maincpu.ow@4a78=ffff,
+	maincpu.ow@4a96=4EB8,
+	maincpu.ow@4a98=2CA6,
+	maincpu.ow@4a9a=608A,
+	maincpu.ow@4db0=ffff,
+	maincpu.ow@e2fe=00d3,
+	maincpu.ow@ecc0=00d3,
+	maincpu.ow@eccc=00d3,
+	maincpu.ow@fe90=0dce,
+	maincpu.ow@be64e=ffff,
+	maincpu.ow@bebae=ffff,
+	maincpu.ow@ccc10=0000,
+	maincpu.ow@ccc12=0000,
+	maincpu.ow@ccc14=0000,
+	maincpu.ow@ccc16=0000,
+	maincpu.ow@ccc18=0000,
+	maincpu.ow@ccc1a=0000,
+	maincpu.ow@ccc1c=0000,
+	maincpu.ow@ccc1e=0000,
+        maincpu.ow@D6A80=283D,
+	maincpu.ow@D6A82=5BE1,
+	maincpu.ow@D6A84=EAD4,
+	maincpu.ow@D6A86=352E,
+	maincpu.ow@D6A88=9617,
+	maincpu.ow@D6A8A=D205,
+	maincpu.ow@D6A8C=08CE,
+	maincpu.ow@D6A8E=68B9,
+	maincpu.ow@D6A90=3450,
+	maincpu.ow@D6A92=0C45,
+	maincpu.ow@D6A94=E35E,
+	maincpu.ow@D6A96=FD8F,
+	maincpu.ow@D6A98=A5B4,
+	maincpu.ow@D6A9A=DB9D,
+	maincpu.ow@D6A9C=5995,
+	maincpu.ow@D6A9E=359F,
+	maincpu.ow@D6AA0=143E,
+	maincpu.ow@D6AA2=AEF2,
+	maincpu.ow@D6AA4=6C88,
+	maincpu.ow@D6AA6=C4B5,
+	maincpu.ow@D6AA8=5AE9,
+	maincpu.ow@D6AAA=267B,
+	maincpu.ow@D6AAC=9690,
+	maincpu.ow@D6AAE=7CA2,
+	maincpu.ow@D6AB0=B6B4,
+	maincpu.ow@D6AB2=4405,
+	maincpu.ow@D6AB4=FFE4,
+	maincpu.ow@D6AB6=1777,
+	maincpu.ow@D6AB8=6579,
+	maincpu.ow@D6ABA=D24B,
+	maincpu.ow@D6ABC=17CA,
+	maincpu.ow@D6ABE=3DC7,
+	maincpu.ow@D6AC0=E006,
+	maincpu.ow@D6AC2=20D1,
+	maincpu.ow@D6AC4=7132,
+	maincpu.ow@D6AC6=F943,
+	maincpu.ow@D6AC8=6090,
+	maincpu.ow@D6ACA=2D83,
+	maincpu.ow@D6ACC=F56B,
+	maincpu.ow@D6ACE=00F6
       </action>
     </script>
   </cheat>
