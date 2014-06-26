@@ -549,13 +549,13 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
   <cheat desc="    PL1 Action">
     <parameter>
+      <item value="0x00">Neutral (Stand)</item>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
       <item value="0x0A">Up-Left</item>
       <item value="0x04">Down (Crouch)</item>
       <item value="0x05">Down-Right</item>
       <item value="0x06">Down-Left</item>
-      <item value="0x00">Neutral (Stand)</item>
       <item value="0x01">Right</item>
       <item value="0x02">Left</item>
       <item value="0xff">Throw-Right (fierce throw)</item>
@@ -603,13 +603,13 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
   <cheat desc="    PL2 Action">
     <parameter>
+      <item value="0x00">Neutral (Stand)</item>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
       <item value="0x0A">Up-Left</item>
       <item value="0x04">Down (Crouch)</item>
       <item value="0x05">Down-Right</item>
       <item value="0x06">Down-Left</item>
-      <item value="0x00">Neutral (Stand)</item>
       <item value="0x01">Right</item>
       <item value="0x02">Left</item>
       <item value="0xff">Throw-Right (fierce throw)</item>
