@@ -926,6 +926,15 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
   </cheat>
 
+ <cheat desc="Torunament battle">
+    <script state="run">
+        <action condition="(maincpu.pw@FF8008 == 4)">maincpu.pb@FF8349=0xff</action>
+    </script>
+    <script state="off">
+        <action>maincpu.pb@FF8349=0</action>
+    </script>
+ </cheat>
+
   <cheat desc=" "/>
 
   <cheat desc="Infinite Energy PL1 mode1">
