@@ -190,11 +190,12 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     </script>
   </cheat>
 
-  <cheat desc="Training mode Hack 1.0 (jedpossum)">
+  <cheat desc="Training mode Hack 1.1 (jedpossum)">
   <!--  author: jedpossum
         origin: http://forums.shoryuken.com/discussion/comment/8902051/#Comment_8902051
+                http://forums.shoryuken.com/discussion/comment/9813797/#Comment_9813797
        comment: ported to mame cheat format by pof
-   description: infinite time, super recharges, health recharges, dizzy ok, random stages
+   description: infinite time, super recharges, health recharges, dizzy ok, random stages, hold start to return to character selection
       glitches: minor glitches when health is empty
    -->
     <script state="on">
@@ -207,6 +208,10 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@19D8=4EB9,
 	maincpu.ow@19DA=000D,
 	maincpu.ow@19DC=6A80,
+
+	<!-- jump to code to hold start for character select -->
+	maincpu.ow@19E0=000D,
+	maincpu.ow@19E2=6C60,
 
 	<!-- random stages -->
 	maincpu.ow@39a6=4EB9,
@@ -323,7 +328,83 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@D6AC8=002A,
 	maincpu.ow@D6ACA=3340,
 	maincpu.ow@D6ACC=002C,
-	maincpu.ow@D6ACE=4E75
+	maincpu.ow@D6ACE=4E75,
+
+	<!--
+	20 bytes
+	45F9 00FF F080		lea $FFF080,A2 ;Set address for timer
+	4A2D 007E			tst.b ($7E,A5);Checks Start input
+	6608 				bne; PC+08 | branch if start isn't pressed
+	157C 0030 0000 		move.b #$30, ($0,A2); Refill Timer
+	4E75				rts
+	-->
+	maincpu.ow@D6C60=45F9,
+	maincpu.ow@D6C62=00FF,
+	maincpu.ow@D6C64=F080,
+	maincpu.ow@D6C66=4A2D,
+	maincpu.ow@D6C68=007E,
+	maincpu.ow@D6C6A=6608,
+	maincpu.ow@D6C6C=157C,
+	maincpu.ow@D6C6E=0030,
+	maincpu.ow@D6C70=0000,
+	maincpu.ow@D6C72=4E75,
+
+	<!--
+	6 bytes
+	4A2A 0000			tst.b ($0,A2); start timer check
+	6620				bne; PC+20 | branch if timer isn't 0
+	-->
+	maincpu.ow@D6C74=4A2A,
+	maincpu.ow@D6C76=0000,
+	maincpu.ow@D6C78=6620,
+
+	<!--
+	18 bytes
+	;Set Scene aka Set it to be character select 2
+	3B7C 000C 0004		move.w #$c, ($4,A5)
+	3B7C 0002 0008		move.w #$2, ($8,A5)
+	3B7C 0010 000A		move.w #$10, ($a,A5)
+	-->
+	maincpu.ow@D6C7A=3B7C,
+	maincpu.ow@D6C7C=000C,
+	maincpu.ow@D6C7E=0004,
+	maincpu.ow@D6C80=3B7C,
+	maincpu.ow@D6C82=0002,
+	maincpu.ow@D6C84=0008,
+	maincpu.ow@D6C86=3B7C,
+	maincpu.ow@D6C88=0010,
+	maincpu.ow@D6C8A=000A,
+
+	<!--
+	14 bytes
+	;Deselect characters
+	102A 0000			move.b #$0, D0
+	1B40 07DD			move.b D0, ($7dd,A5)
+	1B40 0BDD			move.b D0, ($bdd,A5)
+	4E75				rts
+	-->
+	maincpu.ow@D6C8C=102A,
+	maincpu.ow@D6C8E=0000,
+	maincpu.ow@D6C90=1B40,
+	maincpu.ow@D6C92=07DD,
+	maincpu.ow@D6C94=1B40,
+	maincpu.ow@D6C96=0BDD,
+	maincpu.ow@D6C98=4E75,
+
+	<!--
+	10 bytes
+	;Timer countdown
+	102A 0000			move.b ($0,A2), D0
+	5300				subq.b #1,D0
+	1480				move.b D0, (A2)
+	4E75				rts
+	-->
+	maincpu.ow@D6C9A=102A,
+	maincpu.ow@D6C9C=0000,
+	maincpu.ow@D6C9E=5300,
+	maincpu.ow@D6CA0=1480,
+	maincpu.ow@D6CA2=4E75
+
       </action>
     </script>
     <script state="off">
@@ -331,6 +412,8 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@19D8=4EB9,
 	maincpu.ow@19DA=0001,
 	maincpu.ow@19DC=0EFC,
+	maincpu.ow@19E0=0001,
+	maincpu.ow@19E2=0EFC,
 	maincpu.ow@39a6=3B71,
 	maincpu.ow@39a8=0000,
 	maincpu.ow@39aa=0c4e,
@@ -394,7 +477,41 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 	maincpu.ow@D6AC8=6090,
 	maincpu.ow@D6ACA=2D83,
 	maincpu.ow@D6ACC=F56B,
-	maincpu.ow@D6ACE=00F6
+	maincpu.ow@D6ACE=00F6,
+	maincpu.ow@D6C60=41C4,
+	maincpu.ow@D6C62=511B,
+	maincpu.ow@D6C64=98C4,
+	maincpu.ow@D6C66=1D41,
+	maincpu.ow@D6C68=A0A4,
+	maincpu.ow@D6C6A=8107,
+	maincpu.ow@D6C6C=3069,
+	maincpu.ow@D6C6E=52A1,
+	maincpu.ow@D6C70=FF0C,
+	maincpu.ow@D6C72=E4B9,
+	maincpu.ow@D6C74=8670,
+	maincpu.ow@D6C76=7D09,
+	maincpu.ow@D6C78=6BBF,
+	maincpu.ow@D6C7A=A3D3,
+	maincpu.ow@D6C7C=621C,
+	maincpu.ow@D6C7E=86C9,
+	maincpu.ow@D6C80=F317,
+	maincpu.ow@D6C82=07DE,
+	maincpu.ow@D6C84=1E87,
+	maincpu.ow@D6C86=531A,
+	maincpu.ow@D6C88=8E5E,
+	maincpu.ow@D6C8A=B685,
+	maincpu.ow@D6C8C=7ECF,
+	maincpu.ow@D6C8E=3271,
+	maincpu.ow@D6C90=6284,
+	maincpu.ow@D6C92=E61D,
+	maincpu.ow@D6C94=2C73,
+	maincpu.ow@D6C96=6B5B,
+	maincpu.ow@D6C98=0564,
+	maincpu.ow@D6C9A=065A,
+	maincpu.ow@D6C9C=1F47,
+	maincpu.ow@D6C9E=AE1A,
+	maincpu.ow@D6CA0=DCFE,
+	maincpu.ow@D6CA2=FFA7
       </action>
     </script>
   </cheat>
