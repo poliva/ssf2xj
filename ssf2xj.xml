@@ -731,23 +731,12 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x02">Left</item>
       <item value="0xff">Throw-Right (fierce throw)</item>
       <item value="0xfe">Throw-Left (fierce throw)</item>
-<!--
-	P2 must be human controlled and "Easy F,D,DF" cheat must be ON.
-      <item value="0xfd">DP Right</item>
-      <item value="0xfc">DP Left</item>
--->
     </parameter>
     <script state="on">
         <action>maincpu.ow@078034=4E71</action>
         <action>ow@2cda=4e71,ow@2cdc=4e71,ow@2cde=4e71</action>
     </script>
     <script state="run">
-<!--
-        <action condition="param == 0xfd and frame % 2 == 0">maincpu.pw@FF8BE0=0005</action>
-        <action condition="param == 0xfd and frame % 2 != 0">maincpu.pw@FF8BE0=0025</action>
-        <action condition="param == 0xfc and frame % 2 == 0">maincpu.pw@FF8BE0=0006</action>
-        <action condition="param == 0xfc and frame % 2 != 0">maincpu.pw@FF8BE0=0026</action>
--->
         <action>maincpu.ow@078034=4E71</action>
         <action condition="param == 0xff and frame % 2 == 0">maincpu.pw@FF8BE0=0001</action>
         <action condition="param == 0xff and frame % 2 != 0">maincpu.pw@FF8BE0=0041</action>
