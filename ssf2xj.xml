@@ -699,16 +699,27 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         <action condition="param == 0xfc and maincpu.pb@ff8851==A and (maincpu.pb@FF8BE1 band 4) != 4 and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
         <action condition="param == 0xfc and maincpu.pb@ff8851==A and (maincpu.pb@FF8BE1 band 4) != 4 and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
 
-        <!-- block everything: when opponent is jumping block high only if distance between the two dummies is less than 0x16 -->
-        <action condition="param == 0xfd and maincpu.pb@ff8851==0">maincpu.pw@FF87E0=0000</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851==A and (maincpu.pb@FF8BE1 band 4) == 4 and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0005</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851==A and (maincpu.pb@FF8BE1 band 4) == 4 and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0006</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851>=A and (maincpu.pb@FF8BE1 band 4) != 4 and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851>=A and (maincpu.pb@FF8BE1 band 4) != 4 and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 16) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0000</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 16) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0000</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt 16) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt 16) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action>
+        <!-- block everything: -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==0">maincpu.pw@FF87E0=0000</action> <!-- neutral when opponent is neutral -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==A and (maincpu.pb@FF8BE1 band 4) == 4 and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0005</action> <!-- if opponent attacking and pressing down, block low (on P1 side) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==A and (maincpu.pb@FF8BE1 band 4) == 4 and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0006</action> <!-- if opponent attacking and pressing down, block low (on P2 side) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851>=A and (maincpu.pb@FF8BE1 band 4) != 4 and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851>=A and (maincpu.pb@FF8BE1 band 4) != 4 and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
+
+	<!-- jump attacks (ff8851==4) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt F) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action> <!-- block high if the opponent is at close range (<0xF) on P1 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt F) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action> <!-- block high if the opponent is
+ at close range (<0xF) on P2 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 20) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P1 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 20) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P2 side -->
+
+	<!-- ... except if: the opponent hits any kick or punch button -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8BE0 band ~000F) != 0 and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action>
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8BE0 band ~000F) != 0 and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action>
+
+	<!-- ... and do not block when the opponent is so far that he can't reach us with a jumping normal attack -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 70) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0000</action>
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 70) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0000</action>
 
     </script>
     <script state="off">
@@ -774,16 +785,27 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         <action condition="param == 0xfc and maincpu.pb@ff8451==A and (maincpu.pb@FF87E1 band 4) != 4 and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
         <action condition="param == 0xfc and maincpu.pb@ff8451==A and (maincpu.pb@FF87E1 band 4) != 4 and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
 
-        <!-- block everything: when opponent is jumping block high only if distance between the two dummies is less than 0x16 -->
-        <action condition="param == 0xfd and maincpu.pb@ff8451==0">maincpu.pw@FF8BE0=0000</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451==A and (maincpu.pb@FF87E1 band 4) == 4 and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0005</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451==A and (maincpu.pb@FF87E1 band 4) == 4 and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0006</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451>=A and (maincpu.pb@FF87E1 band 4) != 4 and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451>=A and (maincpu.pb@FF87E1 band 4) != 4 and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 16) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0000</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 16) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0000</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt 16) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action>
-        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt 16) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action>
+        <!-- block everything: -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==0">maincpu.pw@FF8BE0=0000</action> <!-- neutral when opponent is neutral -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==A and (maincpu.pb@FF87E1 band 4) == 4 and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0005</action> <!-- if opponent attacking and pressing down, block low (on P1 side) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==A and (maincpu.pb@FF87E1 band 4) == 4 and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0006</action> <!-- if opponent attacking and pressing down, block low (on P2 side) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451>=A and (maincpu.pb@FF87E1 band 4) != 4 and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451>=A and (maincpu.pb@FF87E1 band 4) != 4 and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
+
+	<!-- jump attacks (ff8451==4) -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt F) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action> <!-- block high if the opponent is at close range (<0xF) on P1 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt F) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action> <!-- block high if the opponent is
+ at close range (<0xF) on P2 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 20) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P1 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 20) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P2 side -->
+
+	<!-- ... except if: the opponent hits any kick or punch button -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF87E0 band ~000F) != 0 and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action>
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF87E0 band ~000F) != 0 and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action>
+
+	<!-- ... and do not block when the opponent is so far that he can't reach us with a jumping normal attack -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 70) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0000</action>
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 70) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0000</action>
 
     </script>
     <script state="off">
