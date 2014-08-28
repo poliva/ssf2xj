@@ -667,8 +667,8 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
   <cheat desc="    PL1 Action">
     <parameter>
       <item value="0x00">Neutral (Stand)</item>
-      <item value="0xfd">Block everything</item>
-      <item value="0xfc">Block ground normals</item>
+      <item value="0xfd">Block Everything</item>
+      <item value="0xfc">Block Ground Attacks</item>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
       <item value="0x0A">Up-Left</item>
@@ -708,8 +708,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
 	<!-- jump attacks (ff8851==4) -->
         <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt F) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0001</action> <!-- block high if the opponent is at close range (<0xF) on P1 side -->
-        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt F) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action> <!-- block high if the opponent is
- at close range (<0xF) on P2 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt F) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0002</action> <!-- block high if the opponent is at close range (<0xF) on P2 side -->
         <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 20) and maincpu.pb@FF860C==0">maincpu.pw@FF87E0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P1 side -->
         <action condition="param == 0xfd and maincpu.pb@ff8851==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 20) and maincpu.pb@FF860C==1">maincpu.pw@FF87E0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P2 side -->
 
@@ -794,8 +793,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
 
 	<!-- jump attacks (ff8451==4) -->
         <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 lt F) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0001</action> <!-- block high if the opponent is at close range (<0xF) on P1 side -->
-        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt F) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action> <!-- block high if the opponent is
- at close range (<0xF) on P2 side -->
+        <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 lt F) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0002</action> <!-- block high if the opponent is at close range (<0xF) on P2 side -->
         <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8854-maincpu.pw@FF8454 > 20) and maincpu.pb@FF8A0C==0">maincpu.pw@FF8BE0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P1 side -->
         <action condition="param == 0xfd and maincpu.pb@ff8451==4 and (maincpu.pw@FF8454-maincpu.pw@FF8854 > 20) and maincpu.pb@FF8A0C==1">maincpu.pw@FF8BE0=0000</action> <!-- stop blocking if the opponent is farther than 0x20 on P2 side -->
 
