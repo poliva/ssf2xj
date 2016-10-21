@@ -669,6 +669,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
       <item value="0x00">Neutral (Stand)</item>
       <item value="0xfd">Block Everything</item>
       <item value="0xfc">Block Ground Attacks</item>
+      <item value="0xfb">Block Auto</item>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
       <item value="0x0A">Up-Left</item>
@@ -683,6 +684,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     <script state="on">
         <action>maincpu.ow@078034=4E71</action>
         <action>ow@2cd4=4e71,ow@2cd6=4e71,ow@2cd8=4e71</action>
+        <action>maincpu.pb@FFFF04=60</action>
     </script>
     <script state="run">
         <action>maincpu.ow@078034=4E71</action>
@@ -691,6 +693,21 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         <action condition="param == 0xfe and frame % 2 == 0">maincpu.pw@FF87E0=0002</action>
         <action condition="param == 0xfe and frame % 2 != 0">maincpu.pw@FF87E0=0042</action>
         <action condition="param lt 0x0f">maincpu.pb@FF87E1=param</action>
+
+        <!-- block auto (do not block all hits): -->
+        <!-- attacker state (ff8451 or +0x400 for p2): 0 idle, 2 crouching, 4 jumping, 10 doing a ground normal attack or throw, 12 on hitstun (doing an special attack) -->
+        <!-- attacked state (ff8451 or +0x400 for p2): 6 waking up meaty, 8 blocking, 14 hit (receiving an attack), 20 thrown -->
+
+        <action condition="param == 0xfb and maincpu.pb@FFFF04 le 1">maincpu.pb@FFFF04=60</action>
+        <action condition="param == 0xfb and maincpu.pb@ff8851==0">maincpu.pw@FF87E0=0000</action> <!-- neutral when opponent is neutral -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) == 4) and maincpu.pb@FF860C==0 and maincpu.pb@FFFF04 ge 30">maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and pressing down, block low (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) == 4) and maincpu.pb@FF860C==0 and maincpu.pb@FFFF04 le 2f">maincpu.pw@FF87E0=0005, maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and pressing down, block low (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) == 4) and maincpu.pb@FF860C==1 and maincpu.pb@FFFF04 ge 30">maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and pressing down, block low (on P2 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) == 4) and maincpu.pb@FF860C==1 and maincpu.pb@FFFF04 le 2f">maincpu.pw@FF87E0=0006, maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and pressing down, block low (on P2 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) != 4) and maincpu.pb@FF860C==0 and maincpu.pb@FFFF04 ge 30">maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) != 4) and maincpu.pb@FF860C==0 and maincpu.pb@FFFF04 le 2f">maincpu.pw@FF87E0=0001, maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) != 4) and maincpu.pb@FF860C==1 and maincpu.pb@FFFF04 ge 30">maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8851==A or maincpu.pb@ff8851==C) and ((maincpu.pb@FF8BE1 band 4) != 4) and maincpu.pb@FF860C==1 and maincpu.pb@FFFF04 le 2f">maincpu.pw@FF87E0=0002, maincpu.pb@FFFF04=maincpu.pb@FFFF04-1</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
 
         <!-- block ground attacks -->
         <action condition="param == 0xfc and maincpu.pb@ff8851==0">maincpu.pw@FF87E0=0000</action> <!-- neutral when opponent is neutral -->
@@ -752,8 +769,9 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
   <cheat desc="    PL2 Action">
     <parameter>
       <item value="0x00">Neutral (Stand)</item>
-      <item value="0xfd">Block everything</item>
-      <item value="0xfc">Block ground normals</item>
+      <item value="0xfd">Block Everything</item>
+      <item value="0xfc">Block Ground Attacks</item>
+      <item value="0xfb">Block Auto</item>
       <item value="0x08">Up (Jump)</item>
       <item value="0x09">Up-Right</item>
       <item value="0x0A">Up-Left</item>
@@ -768,6 +786,7 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
     <script state="on">
         <action>maincpu.ow@078034=4E71</action>
         <action>ow@2cda=4e71,ow@2cdc=4e71,ow@2cde=4e71</action>
+        <action>maincpu.pb@FFFF05=60</action>
     </script>
     <script state="run">
         <action>maincpu.ow@078034=4E71</action>
@@ -776,6 +795,21 @@ Note, the pb part above can be preceded by p (physical/default) or l (logical) i
         <action condition="param == 0xfe and frame % 2 == 0">maincpu.pw@FF8BE0=0002</action>
         <action condition="param == 0xfe and frame % 2 != 0">maincpu.pw@FF8BE0=0042</action>
         <action condition="param lt 0x0f">maincpu.pb@FF8BE1=param</action>
+
+        <!-- block auto (do not block all hits): -->
+        <!-- attacker state (ff8451 or +0x400 for p2): 0 idle, 2 crouching, 4 jumping, 10 doing a ground normal attack or throw, 12 on hitstun (doing an special attack) -->
+        <!-- attacked state (ff8451 or +0x400 for p2): 6 waking up meaty, 8 blocking, 14 hit (receiving an attack), 20 thrown -->
+
+        <action condition="param == 0xfb and maincpu.pb@FFFF05 le 1">maincpu.pb@FFFF05=60</action>
+        <action condition="param == 0xfb and maincpu.pb@ff8451==0">maincpu.pw@FF8BE0=0000</action> <!-- neutral when opponent is neutral -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) == 4) and maincpu.pb@FF8A0C==0 and maincpu.pb@FFFF05 ge 30">maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and pressing down, block low (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) == 4) and maincpu.pb@FF8A0C==0 and maincpu.pb@FFFF05 le 2f">maincpu.pw@FF8BE0=0005, maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and pressing down, block low (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) == 4) and maincpu.pb@FF8A0C==1 and maincpu.pb@FFFF05 ge 30">maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and pressing down, block low (on P2 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) == 4) and maincpu.pb@FF8A0C==1 and maincpu.pb@FFFF05 le 2f">maincpu.pw@FF8BE0=0006, maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and pressing down, block low (on P2 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) != 4) and maincpu.pb@FF8A0C==0 and maincpu.pb@FFFF05 ge 30">maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) != 4) and maincpu.pb@FF8A0C==0 and maincpu.pb@FFFF05 le 2f">maincpu.pw@FF8BE0=0001, maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and not pressing down, block high (on P1 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) != 4) and maincpu.pb@FF8A0C==1 and maincpu.pb@FFFF05 ge 30">maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
+        <action condition="param == 0xfb and (maincpu.pb@ff8451==A or maincpu.pb@ff8451==C) and ((maincpu.pb@FF87E1 band 4) != 4) and maincpu.pb@FF8A0C==1 and maincpu.pb@FFFF05 le 2f">maincpu.pw@FF8BE0=0002, maincpu.pb@FFFF05=maincpu.pb@FFFF05-1</action> <!-- if opponent attacking and not pressing down, block high (on P2 side) -->
 
         <!-- block ground attacks -->
         <action condition="param == 0xfc and maincpu.pb@ff8451==0">maincpu.pw@FF8BE0=0000</action> <!-- neutral when opponent is neutral -->
