@@ -828,7 +828,7 @@ local function text(x, y, row)
 end
 
 local function image(x, y, row)
-	gui.gdoverlay(x, y, module[row].img:gdStr())
+	gui.gdoverlay(x, y, module[row].img)
 end
 
 display = image
@@ -847,8 +847,9 @@ local function readimages()
 		local sourceimg = gd.createFromPng(resourcepath .. iconfile)
 		image_icon_size = sourceimg:sizeX()/2
 		for n, key in ipairs(module) do
-			key.img = gd.createFromPngStr(blank_img_string)
-			gd.copyResampled(key.img, sourceimg, 0, 0, 0,(n-1)*image_icon_size, scaled_width, icon_size, image_icon_size, image_icon_size)
+			tmp = gd.createFromPngStr(blank_img_string)
+			gd.copyResampled(tmp, sourceimg, 0, 0, 0,(n-1)*image_icon_size, scaled_width, icon_size, image_icon_size, image_icon_size)
+			key.img=tmp:gdStr()
 		end
 	end
 	effective_width = scaled_width
